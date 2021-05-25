@@ -1,0 +1,105 @@
+import java.io.*;
+import java.util.*;
+import java.util.Arrays;   
+import java.util.regex.Pattern;
+
+public class WeightSort {
+	
+	public static String orderWeight(String strng) {
+    
+    //strng to array
+    String[] num = strng.split(" ");
+    
+    //array with original numbers
+    int[] numbers = new int[num.length];
+    
+    for(int i=0;i<num.length;i++){
+      numbers[i]=Integer.parseInt(num[i]); 
+    }
+    int len = numbers.length;
+    int len2 = numbers.length;
+    
+    int[] pom = numbers;     //helper array
+    
+    int pomcount;            //helper int
+    
+    //array with values of original numbers
+    int[] count = new int[num.length];
+    
+    
+    //counting each element of an int array - numbers
+    for(int i=0;i<len;i++){
+      
+      pomcount = numbers[i];
+      count[i]=0;
+      
+      while(pomcount>0)
+        {
+          count[i]+= pomcount%10;  
+          pomcount= pomcount/10;
+        }
+    }
+    
+    
+    int[] sorted = new int[count.length];
+    for (int i = 0; i < count.length; i++)
+      sorted[i] = count[i];
+    Arrays.sort(sorted);
+
+    
+    int[] end = new int[count.length];
+    
+    
+    //2d array to compare values 
+    int[][] end1 = new int[2][count.length];    //with Id row and sorted counts
+    int[][] end2 = new int[2][count.length];    //with number and counts
+    
+    
+    for(int i=0;i<2;i++)
+      for(int j=0;j<count.length;j++)
+      {
+        if(i==0)
+          end1[i][j]=j;         //index
+        else
+          end1[i][j]=sorted[j]; //sort (count sorted)
+      }
+    
+    for(int i=0;i<2;i++)
+      for(int j=0;j<count.length;j++)
+      {
+        if(i==0)
+          end2[i][j]=numbers[j];  //number
+        else
+          end2[i][j]=count[j];    //count (not sorted)
+      }
+    
+    int number;
+    
+    //matching sorted counted number with original number
+
+    for(int i=0;i<count.length;i++)
+      for(int j=0;j<count.length;j++)
+      {
+        if(end1[1][i]==end2[1][j])
+        {
+            end[i]=end2[0][j];
+//          if(end.length==len2)
+            break;
+        }
+      }
+    
+    
+    //return Arrays.toString(numbers);
+    String fin = Arrays.toString(end);
+    String finn = fin.replace(",","");
+    String finnn = finn.replaceAll("\\[", "").replaceAll("\\]","");
+  
+    
+    System.out.println("finnn is: " + finnn);
+    System.out.println();
+
+    
+    return finnn;
+	}
+  
+}
